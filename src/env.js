@@ -1,8 +1,5 @@
-import { createEnv } from "@t3-oss/env-core";
+import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
-import { config } from "dotenv";
-
-config();
 
 export const env = createEnv({
   server: {
@@ -25,9 +22,16 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
   },
-
-  clientPrefix: "PUBLIC_",
   client: {},
-  runtimeEnv: process.env,
+  runtimeEnv: {
+    POSTGRES_DB: process.env.POSTGRES_DB,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_PASSWORD:process.env.POSTGRES_PASSWORD,
+    DATABASE_HOST:process.env.DATABASE_HOST,
+    DATABASE_PORT:process.env.DATABASE_PORT,
+    NODE_ENV: process.env.NODE_ENV,
+  },
+
+  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   emptyStringAsUndefined: true,
 });
