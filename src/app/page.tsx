@@ -1,6 +1,13 @@
-import { api } from "@/trpc/server";
+import { SignInButton, SignedOut } from "@clerk/nextjs";
+// import { auth } from "@clerk/nextjs/server";
+
 export default async function Home() {
-  const hello = await api.test.hello({ text: "Misha" });
-  console.log(hello);
-  return <h2>{hello.greeting}</h2>;
+  // const { sessionClaims } = await auth();
+  return (
+    <>
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+    </>
+  );
 }
