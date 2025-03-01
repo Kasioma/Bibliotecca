@@ -1,5 +1,5 @@
 @echo off
-set CONTAINER_NAME=user-db
+set CONTAINER_NAME=origin-db
 
 :: Check if Docker is installed
 docker --version >nul 2>&1

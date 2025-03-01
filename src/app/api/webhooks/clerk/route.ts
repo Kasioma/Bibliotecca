@@ -1,6 +1,9 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent, clerkClient } from "@clerk/nextjs/server";
+import { db } from "@/server/db";
+import { userTable } from "@/server/db/schema";
+import { authSchema } from "@/utilities/zod/auth";
 
 export async function POST(req: Request) {
   const headerPayload = await headers();
@@ -36,6 +39,15 @@ export async function POST(req: Request) {
           roles: ["user"],
         },
       });
+      const user = {
+        id: event.data.id,
+        username: event.data.username,
+      };
+      const validation = authSchema.safeParse(user);
+      if (!validation.success) {
+        return new Response("Invalid user schema", { status: 400 });
+      }
+      await db.insert(userTable).values(validation.data);
       break;
     }
   }
