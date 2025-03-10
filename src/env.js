@@ -21,6 +21,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    FILESTORAGE_URL: z.string().default("http://localhost:3001"),
   },
   client: {},
   runtimeEnv: {
@@ -30,6 +31,7 @@ export const env = createEnv({
     DATABASE_HOST:process.env.DATABASE_HOST,
     DATABASE_PORT:process.env.DATABASE_PORT,
     NODE_ENV: process.env.NODE_ENV,
+    FILESTORAGE_URL: process.env.FILESTORAGE_URL,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
