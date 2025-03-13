@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import TailwindIndicator from "@/components/TailwindIndicator";
+import { ThemeContextProvider } from "@/context/theme";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,6 +15,7 @@ const inter = Inter({
 export const metadata = {
   title: "ShaderHub",
   description: "3D Web Repository",
+  icons: "/favicon.png",
 };
 
 export default function RootLayout({
@@ -23,12 +25,14 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`font-sans ${inter.variable}`}>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-          <TailwindIndicator />
-        </body>
-      </html>
+      <ThemeContextProvider>
+        <html lang="en">
+          <body className={`font-sans ${inter.variable}`}>
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+            <TailwindIndicator />
+          </body>
+        </html>
+      </ThemeContextProvider>
     </ClerkProvider>
   );
 }
