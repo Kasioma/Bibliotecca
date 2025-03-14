@@ -1,25 +1,23 @@
-"use client";
 import FileUploader from "@/components/FileUploader";
 import Header from "@/components/Header";
 import PictureUploader from "@/components/PictureUploader";
-import { useTheme } from "@/context/theme";
 import { SignInButton, SignedOut } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Home() {
-  const { setTheme } = useTheme();
+export default async function Home() {
+  const { sessionClaims } = await auth();
+  console.log(sessionClaims);
   return (
     <>
-      <Header />
       <FileUploader />
       <PictureUploader />
       <SignedOut>
+        <Header user={null} />
         <SignInButton />
       </SignedOut>
-      <button
-        onClick={() => setTheme((prev) => (prev == "light" ? "dark" : "light"))}
-      >
-        Dark
-      </button>
+      {/* <SignedIn>
+        <Header />
+      </SignedIn> */}
     </>
   );
 }
